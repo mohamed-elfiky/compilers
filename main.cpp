@@ -1,5 +1,3 @@
-
-/*code to be organized soon*/
 #include<iostream>
 #include<string>
 #include<sstream>
@@ -11,22 +9,22 @@ const char num = '1';
 const char opsy='5' ;
 const char iden='9' ;
 map<string, double >lookup;
-//////////////////////////////////////////////
+////////////////////////////////////////////////////////
 void error (string s)
-
 {
   throw runtime_error (s);
 }
+/////////////////////////////////////////////////////////
 struct Token
 {
     char kind;
 	double value;
 	char alpha ;
-    string ident;
+    //string ident;
     Token(char ch) :kind(ch), value(0) { }
-	Token(char ch, double val) :kind(ch), value(val) { }
-    Token(char alph , char ki):alpha(alph) ,kind(ki){ }
-    Token(char ch , string  id) :kind(ch) , ident(id){ }   
+	Token(char ch, double val) :kind(ch), value(val){ }
+    Token(char alph , char ki):alpha(alph), kind(ki){ }
+    //Token(char ch , string  id) :kind(ch) ,ident(id){ }
 };
 ///////////////////////////////////////////////////////////
 stringstream math_exp;
@@ -38,7 +36,8 @@ double eval(string) ;
 ////////////////////////////////////////////////////////////
 int main()
 {
-cout<<eval("5.5+12*log(0.4)+2.2^4;"); //add your math expression inside eval();
+lookup["M"]=10;
+cout<<eval("5.5+12*sin(M/2)+2.2^4;");
 return 0;
 }
 ////////////////////////////////////////////
@@ -71,7 +70,7 @@ case '1':
         left= t.value;
         t = get_token();
         break;
-
+//////////////////////////////////////////////////////////////////////////////
 case '5':
         {
 
@@ -88,7 +87,6 @@ case '5':
                                           double d =expression();
                                           d=sin(d);
                                           math_exp>>ch;
-
                                           return d;
                                          }
                             else if (s== "cos" )
@@ -133,7 +131,18 @@ case '5':
                         }
                 }
 
+/////////////////////////////////////////////////////////////////////////
 
+case '9':         //identifier
+         {
+         double d=t.value;
+         char ch;
+         math_exp>>ch;
+         return d;
+
+         }
+
+/////////////////////////////////////////////////////////////////////////
  default:
         math_exp.putback(t.kind);
         return left;
@@ -182,8 +191,6 @@ while(true)
 		case '+':
                 cout<<"here5"<<endl;
                 left += term();
-                                cout<<term<<endl;
-
                 t = get_token();
                 break;
         case '-':
@@ -235,7 +242,7 @@ Token get_token()
             {
                             char ch1;
                             math_exp>>ch1;      //lookahead
-                            if(isalpha(ch1)) 
+                            if(isalpha(ch1))
                             {
                             math_exp.putback(ch1);
                             math_exp.putback(ch);
@@ -246,11 +253,13 @@ Token get_token()
 
                             else // idendtifier is called
                             {
+                            math_exp.putback(ch1);
                             math_exp.putback(ch);
                             string k;
                             k =ch;
+
                             double d =lookup[k];
-                            return Token(k,d);
+                            return Token(iden,d);
                             }
 
             }
