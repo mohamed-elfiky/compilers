@@ -1,3 +1,5 @@
+
+/*code to be organized soon*/
 #include<iostream>
 #include<string>
 #include<sstream>
@@ -36,7 +38,7 @@ double eval(string) ;
 ////////////////////////////////////////////////////////////
 int main()
 {
-cout<<eval("5.5+12*log(0.4)+2.2^4;");
+cout<<eval("5.5+12*log(0.4)+2.2^4;"); //add your math expression inside eval();
 return 0;
 }
 ////////////////////////////////////////////
